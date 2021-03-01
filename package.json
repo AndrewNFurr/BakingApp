@@ -1,0 +1,35 @@
+{
+  "name": "BankingApp",
+  "version": "1.0.0",
+  "description": "App for keeping up with one's finances",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.5.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "postinstall": "npm run client:build",
+    "client:dev": "react-scripts start",
+    "client:build": "react-scripts build",
+    "server:dev": "nodemon index.js",
+    "db:build": "node ./db/init_db",
+    "start": "node index.js",
+    "heroku-postbuild": "npm run db:build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrewNFurr/ProductivityApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndrewNFurr/ProductivityApp/issues"
+  },
+  "homepage": "https://github.com/AndrewNFurr/ProductivityApp#readme"
+}
