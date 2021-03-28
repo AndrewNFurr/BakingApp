@@ -1,15 +1,8 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentUser } from '../features/users/usersSlice'
+import React from 'react';
 
-const HomePage = () => { 
-    const currentUser = useSelector(selectCurrentUser);
-    const { user } = currentUser;
-
-    useEffect(() => {
-        console.log(currentUser);
-    }, [currentUser]);
-
+const HomePage = ({
+    user
+}) => { 
     return (
         <div>
             <p>Hello {user ? user.firstName : 'Person'}!</p>

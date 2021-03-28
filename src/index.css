@@ -8,7 +8,7 @@ body,
 .header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: lightgreen;
 }
 
@@ -24,7 +24,11 @@ body,
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
+.nav-login {
+    display: flex;
+    align-items: center;
 }
 
 /* LOGIN STYLE */

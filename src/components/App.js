@@ -7,7 +7,8 @@ import {
   } from "react-router-dom";
 
   import { 
-      Users 
+      Users,
+      HomePageContainer
     } from '../features/index';
   import {
       Header,
@@ -21,7 +22,7 @@ import {
             <Header />
             <Switch>
                 <Route exact path='/'>
-                    <HomePage />
+                    <HomePageContainer />
                 </Route>
                 <Route exact path='/users'>
                     <h1>Users</h1>

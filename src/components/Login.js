@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { Nav, Button } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import {
     loginUser
 } from '../features/users/usersSlice';
