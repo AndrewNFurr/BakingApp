@@ -1,37 +1,63 @@
 {
-  "name": "BankingApp",
+  "name": "furrbanking",
   "version": "1.0.0",
   "description": "App for keeping up with one's finances",
   "main": "index.js",
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "bootstrap": "^4.6.0",
     "cors": "^2.8.5",
+    "dom-helpers": "^5.2.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7",
     "pg": "^8.5.1",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.5.2",
+    "react-bootstrap-icons": "^1.4.0",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
-    "redux": "^4.0.5"
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "reactjs-popup": "^2.0.4",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-persist": "^6.0.0",
+    "web-vitals": "^1.1.1",
+    "workbox-webpack-plugin": "^5.1.4"
   },
   "scripts": {
     "postinstall": "npm run client:build",
     "client:dev": "react-scripts start",
     "client:build": "react-scripts build",
     "server:dev": "nodemon index.js",
-    "db:build": "node ./db/init_db",
+    "db:build": "node ./db/init",
     "start": "node index.js",
     "heroku-postbuild": "npm run db:build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AndrewNFurr/ProductivityApp.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AndrewNFurr/ProductivityApp/issues"
+  "proxy": "http://localhost:3000",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
-  "homepage": "https://github.com/AndrewNFurr/ProductivityApp#readme"
+  "devDependencies": {
+    "json-loader": "^0.5.7"
+  }
 }
