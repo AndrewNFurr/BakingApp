@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import { buildHeaders, setToken } from '../../api/index';
 
@@ -149,6 +148,6 @@ export const { clearUser } = usersSlice.actions;
 export const selectUsers = (state) => state.usersList.users;
 export const isLoadingUsers = (state) => state.usersList.isLoading;
 export const selectCurrentUser = (state) => state.usersList.currentUser;
-console.log(selectCurrentUser);
+
 
 export default usersSlice.reducer
