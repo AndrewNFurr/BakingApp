@@ -21,6 +21,15 @@ const Header = () => {
                 <Nav.Item>
                     <Nav.Link href='/' className='header-link'>Home</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href='/cards' className='header-link'>Cards</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href='/users' className='header-link'>Users</Nav.Link>
+                </Nav.Item>
+                { user ? <Nav.Item>
+                    <Nav.Link href='/accounts' className='header-link'>Accounts</Nav.Link>
+                </Nav.Item> : null }
             </div>
         </Nav>
         <div className='nav-login'>

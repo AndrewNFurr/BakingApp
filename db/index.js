@@ -45,6 +45,7 @@ async function createUser({
 
 async function createAccount({
     userId,
+    name,
     type,
     balance,
     active
@@ -54,11 +55,11 @@ async function createAccount({
             rows: [account]
         } = await client.query(
             `
-            INSERT INTO accounts("userId", type, balance, active)
-            VALUES($1, $2, $3, $4)
+            INSERT INTO accounts("userId", name, type, balance, active)
+            VALUES($1, $2, $3, $4, $5)
             RETURNING *;
             `,
-            [userId, type, balance, active]);
+            [userId, name, type, balance, active]);
         return account;
     } catch (error) {
         throw error;
@@ -117,19 +118,19 @@ async function createBill({
 
 async function getUsers() {
     try {
-        const {
-            rows
-        } = await client.query(`
-                SELECT *
-                FROM users
-            `);
-
-            rows.map((row) => delete row.password);
-            return rows;
-    } catch(error) {
-        throw error;
-    } 
-}
+      const { rows } = await client.query(`
+  
+        SELECT *
+        FROM users;
+      `);
+  
+      rows.map((row) => delete row.password);
+  
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 async function getUserById(id) {
     try {
@@ -139,7 +140,8 @@ async function getUserById(id) {
             SELECT * 
             FROM users
             WHERE id=${id}
-            `)
+            `, [id])
+
         if (!user) {
             return null;
         }
@@ -169,7 +171,60 @@ async function getUserByUsername(username) {
         throw error;
     }
 }
+
+//ACOOUNTS
+
+async function getAccountById(id) {
+    try {
+      const { rows: account } = await client.query(
+        `
+      SELECT *
+      FROM accounts
+      WHERE id=$1;
+    `,
+        [id]
+      );
+  
+      return account;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+async function getAccountsByUserId(userId) {
+    try {
+        const { 
+            rows: accounts
+        } = await client.query(`
+            SELECT *
+            FROM accounts
+            WHERE userId=$1
+        `, [userId])
+
+        return accounts;
+    } catch(error) {
+        throw error;
+    }
+}
  
+
+//CARDS 
+async function getAllCards() {
+    try {
+        const {
+            rows
+        } = await client.query(`
+            SELECT *
+            FROM cards
+        `);
+        console.log(rows)
+        return rows;
+    } catch(error) {
+        throw error;
+    }
+}
+
+
 
 module.exports = {
     client,
@@ -180,4 +235,6 @@ module.exports = {
     getUsers,
     getUserById,
     getUserByUsername,
+    getAllCards,
+    getAccountsByUserId
 };

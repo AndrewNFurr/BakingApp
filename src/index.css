@@ -53,3 +53,57 @@ body,
     flex-direction: column;
     justify-content: space-around;
 }
+
+/* CARD STYLE */
+.card-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-image: url(https://i.pinimg.com/originals/66/b1/29/66b1298df868370cadaad91b532ab093.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 70%;
+    border-radius: 5px;;
+}
+
+.card-header img {
+    height: 30px;
+    width: 30px;
+    grid-row: 2/3;
+    grid-column: 1/1;
+}
+.card-header {
+    height: 5.5rem;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.card-header p {
+    font-size: 18px;
+    grid-row: 1/1;
+    grid-column: 3/3;
+}
+
+.card-contents {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

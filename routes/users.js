@@ -17,6 +17,7 @@ const {
 usersRouter.get('/', async (req, res, next) => {
     try {
         const users = await getUsers();
+        console.log(users)
         res.send(users);
     } catch (error) {
         next(error);

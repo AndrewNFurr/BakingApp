@@ -9,6 +9,7 @@ import { UsersList }  from '../../components';
 const Users = () => {
     const dispatch = useDispatch();
     const users = useSelector(selectUsers);
+    console.log(users)
 
     useEffect(() => {
             dispatch(loadUsers());

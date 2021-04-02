@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import { buildHeaders, setToken } from '../../api/index';
 
@@ -104,13 +103,12 @@ export const usersSlice = createSlice({
         .addCase(loadUsers.fulfilled, (state, action) => {
             state.isLoading = false;
             state.hasError = false;
-            state.users = action.payload;
+            state.cards = action.payload;
         })
         .addCase(loadUsers.rejected, (state, action) => {
-            console.log(state, 'error');
             state.isLoading = false;
             state.hasError = true;
-            state.users = [];
+            state.cards = [];
         })
         .addCase(loginUser.pending, (state) => {
             state.isLoading = true;
@@ -149,6 +147,5 @@ export const { clearUser } = usersSlice.actions;
 export const selectUsers = (state) => state.usersList.users;
 export const isLoadingUsers = (state) => state.usersList.isLoading;
 export const selectCurrentUser = (state) => state.usersList.currentUser;
-console.log(selectCurrentUser);
 
 export default usersSlice.reducer
