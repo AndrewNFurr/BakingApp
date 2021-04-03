@@ -6,6 +6,7 @@ import { selectCurrentUser } from '../users/usersSlice';
 export const loadAccounts = createAsyncThunk(
     'accountsList/loadAccounts',
     async ({id}) => {
+            console.log(id)
             const { data } = await axios.get('/api/accounts', {id: id});
             console.log(data);
             return data;

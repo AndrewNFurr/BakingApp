@@ -10,12 +10,12 @@ import { UserAccounts }  from '../../components';
 const AccountsContainer = () => {
     const dispatch = useDispatch();
     const accounts = useSelector(selectAccounts);
-    const user = useSelector(selectCurrentUser)
+    const user = useSelector(selectCurrentUser);
     console.log(accounts)
 
     useEffect(() => {
-        const dis = dispatch(loadAccounts(user));
-    }, [dispatch, accounts]);
+        dispatch(loadAccounts(user.id));
+    }, []);
 
     return <div>
         <UserAccounts accounts={accounts} />

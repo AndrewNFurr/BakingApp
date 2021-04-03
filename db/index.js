@@ -198,7 +198,7 @@ async function getAccountsByUserId(userId) {
         } = await client.query(`
             SELECT *
             FROM accounts
-            WHERE userId=$1
+            WHERE "userId"=$1
         `, [userId])
 
         return accounts;

@@ -12,16 +12,14 @@ const Users = () => {
     console.log(users)
 
     useEffect(() => {
-            dispatch(loadUsers());
+        dispatch(loadUsers());
     }, [])
 
-    // if (usersAreLoading) return <div>Loading Users</div>;
     if (!users) return null;
     return (
         <div className='users-container'>
             <h2>Bank Users</h2>
             <UsersList users={users}/>
-            {/* <UserForm /> */}
         </div>
     )
 }

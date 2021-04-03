@@ -103,12 +103,12 @@ export const usersSlice = createSlice({
         .addCase(loadUsers.fulfilled, (state, action) => {
             state.isLoading = false;
             state.hasError = false;
-            state.cards = action.payload;
+            state.users = action.payload;
         })
         .addCase(loadUsers.rejected, (state, action) => {
             state.isLoading = false;
             state.hasError = true;
-            state.cards = [];
+            state.users = [];
         })
         .addCase(loginUser.pending, (state) => {
             state.isLoading = true;
