@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import {
     BrowserRouter as Router,
     Redirect,
@@ -8,12 +9,15 @@ import {
 
   import { 
       Users,
-      HomePageContainer
+      HomePageContainer,
+      Cards,
+      AccountsContainer
     } from '../features/index';
   import {
       Header,
       HomePage
   } from './index';
+
 
   const App = () => {
     return (
@@ -27,6 +31,14 @@ import {
                 <Route exact path='/users'>
                     <h1>Users</h1>
                     <Users />
+                </Route>
+                <Route exact path='/cards'>
+                    <h1>Cards</h1>
+                    <Cards />
+                </Route>
+                <Route exact path='/accounts'>
+                    <h1>Accounts</h1>
+                    <AccountsContainer />
                 </Route>
             </Switch>
         </div>

@@ -1,6 +1,8 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import usersReducer from './features/users/usersSlice';
+import cardsReducer from './features/cards/cardsSlice';
+import accountsReducer from './features/accounts/accountSlice';
 import {
     persistReducer,
     FLUSH,
@@ -19,7 +21,9 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-    usersList: usersReducer
+    usersList: usersReducer,
+    cardsList: cardsReducer,
+    accountsList: accountsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
