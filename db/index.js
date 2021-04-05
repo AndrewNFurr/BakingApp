@@ -112,6 +112,26 @@ async function createBill({
       }
 }
 
+async function createAccountCard({
+    cardId, 
+    accountId, 
+    type, 
+    availableCredit, 
+    active
+}) {
+    try {
+        const { rows: accountCard } = await client.query(`
+            INSERT INTO account_cards("cardId", "accountId", type, "availableCredit", active)
+            VALUES($1, $2, $3, $4, $5)
+            RETURNING *
+        `, [cardId, accountId, type, availableCredit, active]);
+
+        return accountCard;
+    } catch(error) {
+        throw error    
+    }
+}
+
 //GET METHODS
 
 //USERS
@@ -180,11 +200,16 @@ async function getAccountById(id) {
         `
       SELECT *
       FROM accounts
-      WHERE id=$1;
-    `,
-        [id]
-      );
-  
+      WHERE id=${id};
+    `);
+      
+      const accountCards = await getAccountCardById(id);
+      account.cards = accountCards;
+
+      if (!account) {
+          return null
+      };
+
       return account;
     } catch (error) {
       throw error;
@@ -217,8 +242,56 @@ async function getAllCards() {
             SELECT *
             FROM cards
         `);
-        console.log(rows)
+    
         return rows;
+    } catch(error) {
+        throw error;
+    }
+}
+
+async function getAccountCards() {
+    try {
+        const { rows: [accountCards] } = await client.query(`
+            SELECT *
+            FROM account_cards;
+        `);
+
+        return accountCards;
+    } catch(error) {
+        throw error;
+    }
+}
+
+async function getAccountCardsById(id) {
+    try {
+        const { rows: accountCards } = await client.query(`
+            SELECT *
+            FROM account_cards
+            WHERE account_cards."accountId"=$1
+        `, [id])
+    } catch(error) {
+        throw error;
+    }
+}
+
+
+//ADD FUNCTIONS
+
+async function addCardToAccount({cardId, accountId, type, availableCredit, active}) {
+    try {
+        const newCard = {
+            cardId, 
+            accountId, 
+            type, 
+            availableCredit, 
+            active
+        };
+
+        const accountCard = await createAccountCard(newCard);
+        const account = await getAccountById(accountId);
+        console.log(accountCard);
+
+        return account;
     } catch(error) {
         throw error;
     }
@@ -232,9 +305,14 @@ module.exports = {
     createUser,
     createCard, 
     createBill,
+    createAccountCard,
     getUsers,
     getUserById,
     getUserByUsername,
     getAllCards,
-    getAccountsByUserId
+    getAccountById,
+    getAccountsByUserId,
+    getAccountCards,
+    getAccountCardsById,
+    addCardToAccount
 };

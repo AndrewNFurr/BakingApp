@@ -11,13 +11,17 @@ export const modalsSlice = createSlice({
     name: 'modalsList',
     initialState,
     reducers: {
+        toggleShowModal(state) {
+            state.showModal = !state.showModal;
+        },
+
         toggleAccountCardsModal(state) {
-            state.accountCardsModal = !accountCardsModal;
+            state.accountCardsModal = !state.accountCardsModal;
         }
     },
 });
 
-export const { toggleAccountCardsModal } = modalsSlice.actions;
+export const { toggleAccountCardsModal, toggleShowModal } = modalsSlice.actions;
 export const accountCardsModalStatus = (state) => state.modalsList.accountCardsModal;
 export const showModalStatus = (state) => state.modalsList.showModal;
 export default modalsSlice.reducer;
