@@ -15,7 +15,7 @@ import {
     } from '../features/index';
   import {
       Header,
-      HomePage
+      Modals
   } from './index';
 
 
@@ -35,6 +35,7 @@ import {
                 <Route exact path='/cards'>
                     <h1>Cards</h1>
                     <Cards />
+                    <Modals />
                 </Route>
                 <Route exact path='/accounts'>
                     <h1>Accounts</h1>

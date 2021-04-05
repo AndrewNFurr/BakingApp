@@ -89,9 +89,7 @@ export const usersSlice = createSlice({
       },
       reducers: {
           clearUser(state) {
-              console.log(state.currentUser)
               state.currentUser = {};
-              console.log('Logged out');
           }
       },
       extraReducers: (builder) => {

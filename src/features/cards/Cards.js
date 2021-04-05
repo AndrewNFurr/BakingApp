@@ -19,7 +19,8 @@ const Cards = () => {
     return (
         <div className='cards-container'>
             <h2>Card Options</h2>
-            <CardsList cards={cards}/>
+            <CardsList 
+                cards={cards}/>
         </div>
     )
 }
