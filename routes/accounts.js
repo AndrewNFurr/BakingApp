@@ -5,11 +5,9 @@ const {
 } = require('../db/index');
 
 accountsRouter.get('/', async (req, res, next) => {
-    const { id } = req.body;
-    console.log(req.body, req.user)
+    const { id } = req.query;
     try {
         const accounts = await getAccountsByUserId(id);
-        console.log(accounts);
         res.send(accounts);
     } catch(error) {
         next(error);

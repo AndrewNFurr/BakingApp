@@ -1,13 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { useSelector, useDispacth } from 'react-redux';
 import axios from 'axios';
-import { selectCurrentUser } from '../users/usersSlice';
+import { buildHeaders, setToken } from '../../api/index';
 
 export const loadAccounts = createAsyncThunk(
     'accountsList/loadAccounts',
-    async ({id}) => {
+    async (id) => {
             console.log(id)
-            const { data } = await axios.get('/api/accounts', {id: id});
+            const { data } = await axios.get(
+                '/api/accounts', 
+                { params: { id } }, 
+                { headers: buildHeaders() }
+            );
             console.log(data);
             return data;
     }
@@ -24,7 +28,7 @@ export const accountsSlice = createSlice({
       },
     reducers: {
         clearAccount(state) {
-            console.log(state.cards)
+            console.log(state.accounts)
             state.accounts = [];
         }
     },

@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Nav from "react-bootstrap/Nav";
 import { Button } from "react-bootstrap";
-import { useDispatch } from 'react-redux';
 import { clearToken } from '../api/index';
-import { clearUser } from '../features/users/usersSlice'
+import { clearUser, selectCurrentUser } from '../features/users/usersSlice'
 import { Login } from './index';
-import { selectCurrentUser } from '../features/users/usersSlice';
 
 const Header = () => {
     const dispatch = useDispatch();

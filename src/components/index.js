@@ -6,6 +6,7 @@ export { default as CardsList } from './CardsList';
 export { default as Account } from './Account';
 export { default as UserAccounts } from './UserAccounts';
 export { default as Header } from './Header';
+export { default as Modals } from './Modals';
 export { default as Login } from './Login';
 // export { default as Register } from './Register';
 export { default as HomePage } from './HomePage';
