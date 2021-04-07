@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Nav from "react-bootstrap/Nav";
 import { Button } from "react-bootstrap";
-import { useDispatch } from 'react-redux';
 import { clearToken } from '../api/index';
-import { clearUser } from '../features/users/usersSlice'
+import { clearUser, selectCurrentUser } from '../features/users/usersSlice'
 import { Login } from './index';
-import { selectCurrentUser } from '../features/users/usersSlice';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -21,6 +19,15 @@ const Header = () => {
                 <Nav.Item>
                     <Nav.Link href='/' className='header-link'>Home</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href='/cards' className='header-link'>Cards</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href='/users' className='header-link'>Users</Nav.Link>
+                </Nav.Item>
+                { user ? <Nav.Item>
+                    <Nav.Link href='/accounts' className='header-link'>Accounts</Nav.Link>
+                </Nav.Item> : null }
             </div>
         </Nav>
         <div className='nav-login'>

@@ -68,6 +68,7 @@ async function buildTables() {
 
             CREATE TABLE accounts (
                 id SERIAL PRIMARY KEY,
+                name VARCHAR(255) UNIQUE NOT NULL,
                 "userId" INTEGER REFERENCES users(id),
                 type account,
                 balance INTEGER NOT NULL,
@@ -84,9 +85,8 @@ async function buildTables() {
 
             CREATE TABLE account_cards (
                 id SERIAL PRIMARY KEY,
-                "userId" INTEGER REFERENCES users(id),
+                "cardId" INTEGER REFERENCES users(id),
                 "accountId" INTEGER REFERENCES accounts(id),
-                name VARCHAR(255) NOT NULL,
                 type card,
                 "availableCredit" INTEGER,
                 active BOOLEAN DEFAULT 'true'
@@ -139,12 +139,14 @@ async function populateInitial() {
       console.log('Creating Accounts');
       const account1 = {
           userId: 1,
+          name: 'Main Checking',
           type: "checking",
           balance: 1500,
           active: true
       }
       const account2 = {
         userId: 2,
+        name: 'Alt Checking',
         type: "checking",
         balance: 1700,
         active: true
@@ -191,7 +193,7 @@ async function populateInitial() {
       const bill2 = {
           userId: 2,
           title: 'Groceries',
-          description: 'Tomatoes, pototatoes, corn',
+          description: 'Tomatoes, potatoes, corn',
           amount: 2500,
           type: 'utility'
     }

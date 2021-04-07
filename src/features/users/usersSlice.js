@@ -89,9 +89,7 @@ export const usersSlice = createSlice({
       },
       reducers: {
           clearUser(state) {
-              console.log(state.currentUser)
               state.currentUser = {};
-              console.log('Logged out');
           }
       },
       extraReducers: (builder) => {
@@ -106,7 +104,6 @@ export const usersSlice = createSlice({
             state.users = action.payload;
         })
         .addCase(loadUsers.rejected, (state, action) => {
-            console.log(state, 'error');
             state.isLoading = false;
             state.hasError = true;
             state.users = [];
@@ -148,6 +145,5 @@ export const { clearUser } = usersSlice.actions;
 export const selectUsers = (state) => state.usersList.users;
 export const isLoadingUsers = (state) => state.usersList.isLoading;
 export const selectCurrentUser = (state) => state.usersList.currentUser;
-
 
 export default usersSlice.reducer
