@@ -10,15 +10,45 @@ export const loadCards = createAsyncThunk(
     }
 );
 
+export const getCurrentCard = createAsyncThunk(
+    'cardsList/getCurrentCard',
+    async (id) => {
+        console.log(id)
+        const { data } = await axios.get(
+            `/api/cards/${id}`,  
+            { headers: buildHeaders() }
+        );
+        console.log(data);
+        return data;
+    }
+)
+
+export const addCardToAccount = createAsyncThunk(
+    'accountsList/addCardToAccount',
+    async (card) => {
+        try {
+            const { data } = await axios.post(
+                `/api/accounts/${card.accountId}/cards`,
+                { headers: buildHeaders() }
+            );
+            console.log(data);
+            return data;
+        } catch(error) {
+            throw error;
+        }
+    }
+);
+
 export const cardsSlice = createSlice({
     name: 'cardsList',
     initialState: {
         isLoading: false,
         hasError: false,
-        createUserIsPending: false,
-        failedToCreateUser: false,
+        addcardIsPending: false,
+        failedToAddCard: false,
         cards: [],
-        currentCard: {}
+        currentCard: {},
+        byAccountId: {}
       },
     reducers: {
         clearCards(state) {
@@ -41,11 +71,40 @@ export const cardsSlice = createSlice({
             state.isLoading = false;
             state.hasError = true;
             state.cards = [];
+        })
+        .addCase(getCurrentCard.pending, (state) => {
+            state.isLoading = true;
+            state.hasError = false;
+        })
+        .addCase(getCurrentCard.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.hasError = false;
+            state.currentCard = action.payload;
+        })
+        .addCase(getCurrentCard.rejected, (state, action) => {
+            state.isLoading = false;
+            state.hasError = true;
+            state.currentCard = {};
+        })
+        .addCase(addCardToAccount.pending, (state) => {
+            state.isLoading = true;
+            state.hasError = false;
+        })
+        .addCase(addCardToAccount.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.hasError = false;
+            state.byAccountId[action.payload.accountId].push(action.payload);
+        })
+        .addCase(addCardToAccount.rejected, (state, action) => {
+            state.isLoading = false;
+            state.hasError = true;
         });
     }
 });
 
 export const selectCards = (state) => state.cardsList.cards;
+export const selectCurrentCard = (state) => state.cardsList.currentCard;
+export const selectAccountCards = (state) => state.cardsList.byAccountId;
 
 export default cardsSlice.reducer
 

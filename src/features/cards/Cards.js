@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
     loadCards,
-    selectCards
+    selectCards,
+    selectAccountCards
 } from './cardsSlice';
 import { CardsList }  from '../../components';
 
@@ -12,7 +13,7 @@ const Cards = () => {
 
     useEffect(() => {
         dispatch(loadCards());
-}, [])
+}, []);
 
     if (!cards) return null;
 

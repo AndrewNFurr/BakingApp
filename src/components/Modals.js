@@ -17,7 +17,7 @@ export const Modals = () => {
         animation={true}
         centered={true}
         backdrop={true}
-        onExit={() => dispatch(toggleAccountCardsModal())}
+        onExit={() => console.log('danke schon')}
         keyboard={false}>
         <Modal.Body>
             {accountModal
@@ -29,7 +29,7 @@ export const Modals = () => {
          <Modal.Footer>
          <Button onClick={() => {
             dispatch(toggleShowModal());
-            //dispatch(toggleAccountCardsModal());
+            dispatch(toggleAccountCardsModal());
          }}>Close Modal</Button>
          </Modal.Footer>
         </Modal>

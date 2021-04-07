@@ -6,7 +6,6 @@ import { buildHeaders, setToken } from '../../api/index';
 export const loadAccounts = createAsyncThunk(
     'accountsList/loadAccounts',
     async (id) => {
-            console.log(id)
             const { data } = await axios.get(
                 '/api/accounts', 
                 { params: { id } }, 
@@ -16,6 +15,7 @@ export const loadAccounts = createAsyncThunk(
             return data;
     }
 );
+
 
 export const accountsSlice = createSlice({
     name: 'accountsList',

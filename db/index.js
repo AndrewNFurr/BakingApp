@@ -9,6 +9,7 @@ const client = new Client({
 
 const bcrypt = require("bcrypt");
 const { response, query } = require("express");
+const { identity } = require("lodash");
 
 //METHODS
 
@@ -196,7 +197,7 @@ async function getUserByUsername(username) {
 
 async function getAccountById(id) {
     try {
-      const { rows: account } = await client.query(
+      const { rows: [account] } = await client.query(
         `
       SELECT *
       FROM accounts
@@ -226,6 +227,11 @@ async function getAccountsByUserId(userId) {
             WHERE "userId"=$1
         `, [userId])
 
+        accounts.map(async (account) => {
+            const accountCards = await getAccountCardById(account.id);
+            account.cards = accountCards;
+        })
+        
         return accounts;
     } catch(error) {
         throw error;
@@ -244,6 +250,22 @@ async function getAllCards() {
         `);
     
         return rows;
+    } catch(error) {
+        throw error;
+    }
+}
+
+async function getCardById(id) {
+    try {
+        const {
+            rows: [card]
+        } = await client.query(`
+            SELECT *
+            FROM cards
+            WHERE id=${id}
+        `);
+    
+        return card;
     } catch(error) {
         throw error;
     }
@@ -268,7 +290,9 @@ async function getAccountCardsById(id) {
             SELECT *
             FROM account_cards
             WHERE account_cards."accountId"=$1
-        `, [id])
+        `, [id]);
+
+        return accountCards;
     } catch(error) {
         throw error;
     }
@@ -289,9 +313,19 @@ async function addCardToAccount({cardId, accountId, type, availableCredit, activ
 
         const accountCard = await createAccountCard(newCard);
         const account = await getAccountById(accountId);
-        console.log(accountCard);
 
-        return account;
+        const inAccount = account.cards.some((card) => {
+            return card.id === accountCard.cardId;
+        });
+
+        if (!inAccount) {
+            console.log(accountCard);
+
+            return account;
+        } else {
+            return null;
+        }
+        
     } catch(error) {
         throw error;
     }
@@ -310,6 +344,7 @@ module.exports = {
     getUserById,
     getUserByUsername,
     getAllCards,
+    getCardById,
     getAccountById,
     getAccountsByUserId,
     getAccountCards,
