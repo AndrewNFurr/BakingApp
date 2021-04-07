@@ -85,9 +85,8 @@ async function buildTables() {
 
             CREATE TABLE account_cards (
                 id SERIAL PRIMARY KEY,
-                "userId" INTEGER REFERENCES users(id),
+                "cardId" INTEGER REFERENCES users(id),
                 "accountId" INTEGER REFERENCES accounts(id),
-                name VARCHAR(255) NOT NULL,
                 type card,
                 "availableCredit" INTEGER,
                 active BOOLEAN DEFAULT 'true'

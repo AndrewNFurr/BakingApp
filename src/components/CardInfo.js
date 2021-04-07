@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { accountCardsModalStatus, showModalStatus, toggleAccountCardsModal } from '../features/modals/modalsSlice'; 
 
 
 const CardInfo = ({

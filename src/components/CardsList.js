@@ -1,11 +1,22 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button'
+import { useSelector, useDispatch } from 'react-redux'
+import { 
+  accountCardsModalStatus, 
+  showModalStatus, 
+  toggleAccountCardsModal,
+  toggleShowModal 
+} from '../features/modals/modalsSlice'; 
 import Card from 'react-bootstrap/Card'
 import { CardInfo } from './index';
 
 const CardsList = ({
     cards
 }) => {
+    const accountModal = useSelector(accountCardsModalStatus);
+    const showModal = useSelector(showModalStatus);
+    const dispatch = useDispatch();
+
     return <div className='cards-list'>
         {
             cards.map((card) => {
@@ -16,7 +27,15 @@ const CardsList = ({
                   <Card.Text>
                     {card.description}
                   </Card.Text>
-                  <Button variant="primary">Purchase</Button>
+                  <Button 
+                    onClick={() => {
+                      dispatch(toggleAccountCardsModal());
+                      dispatch(toggleShowModal());
+                      console.log(showModal, accountModal);
+                    }}
+                    variant="primary">
+                      Purchase
+                  </Button>
                 </Card.Body>
               </Card>
             })
