@@ -9,7 +9,6 @@ export const Modals = () => {
     const dispatch = useDispatch();
     const accountModal = useSelector(accountCardsModalStatus);
     const showModal = useSelector(showModalStatus);
-    console.log('show:', showModal, accountModal);
     return (
      <>
         <Modal
@@ -17,7 +16,7 @@ export const Modals = () => {
         animation={true}
         centered={true}
         backdrop={true}
-        onExit={() => console.log('danke schon')}
+        onExit={() => dispatch(toggleAccountCardsModal())}
         keyboard={false}>
         <Modal.Body>
             {accountModal
@@ -29,7 +28,6 @@ export const Modals = () => {
          <Modal.Footer>
          <Button onClick={() => {
             dispatch(toggleShowModal());
-            dispatch(toggleAccountCardsModal());
          }}>Close Modal</Button>
          </Modal.Footer>
         </Modal>

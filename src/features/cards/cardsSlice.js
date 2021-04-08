@@ -5,6 +5,14 @@ export const loadCards = createAsyncThunk(
     'cardsList/loadCards',
     async () => {
             const { data } = await axios.get('/api/cards');
+            return data;
+    }
+);
+
+export const loadAccountCards = createAsyncThunk(
+    'cardsList/loadAccountCards',
+    async () => {
+            const { data } = await axios.get('/api/account_cards');
             console.log(data);
             return data;
     }
@@ -12,11 +20,11 @@ export const loadCards = createAsyncThunk(
 
 export const getCurrentCard = createAsyncThunk(
     'cardsList/getCurrentCard',
-    async (id) => {
+    async ({id}) => {
         console.log(id)
         const { data } = await axios.get(
-            `/api/cards/${id}`,  
-            { headers: buildHeaders() }
+            `/api/cards/${card}`,
+            { cardId: id }
         );
         console.log(data);
         return data;
@@ -27,11 +35,22 @@ export const addCardToAccount = createAsyncThunk(
     'accountsList/addCardToAccount',
     async (card) => {
         try {
+            const {
+                cardId,
+                accountId,
+                type,
+                availableCredit,
+                active
+            } = card;
             const { data } = await axios.post(
                 `/api/accounts/${card.accountId}/cards`,
-                { headers: buildHeaders() }
+                {   cardId,
+                    accountId,
+                    type,
+                    availableCredit,
+                    active 
+                },
             );
-            console.log(data);
             return data;
         } catch(error) {
             throw error;
@@ -52,8 +71,10 @@ export const cardsSlice = createSlice({
       },
     reducers: {
         clearCards(state) {
-            console.log(state.cards)
             state.cards = [];
+        },
+        setCurrentCard(state, card={}) {
+            state.currentCard = card.payload;
         }
     },
     extraReducers: (builder) => {
@@ -72,19 +93,19 @@ export const cardsSlice = createSlice({
             state.hasError = true;
             state.cards = [];
         })
-        .addCase(getCurrentCard.pending, (state) => {
+        .addCase(loadAccountCards.pending, (state) => {
             state.isLoading = true;
             state.hasError = false;
         })
-        .addCase(getCurrentCard.fulfilled, (state, action) => {
+        .addCase(loadAccountCards.fulfilled, (state, action) => {
             state.isLoading = false;
             state.hasError = false;
-            state.currentCard = action.payload;
+            state.byAccountId = action.payload;
         })
-        .addCase(getCurrentCard.rejected, (state, action) => {
+        .addCase(loadAccountCards.rejected, (state, action) => {
             state.isLoading = false;
             state.hasError = true;
-            state.currentCard = {};
+            state.byAccountId = {};
         })
         .addCase(addCardToAccount.pending, (state) => {
             state.isLoading = true;
@@ -93,7 +114,7 @@ export const cardsSlice = createSlice({
         .addCase(addCardToAccount.fulfilled, (state, action) => {
             state.isLoading = false;
             state.hasError = false;
-            state.byAccountId[action.payload.accountId].push(action.payload);
+            state.byAccountId[action.payload.id].push(action.payload);
         })
         .addCase(addCardToAccount.rejected, (state, action) => {
             state.isLoading = false;
@@ -102,6 +123,7 @@ export const cardsSlice = createSlice({
     }
 });
 
+export const { setCurrentCard } = cardsSlice.actions
 export const selectCards = (state) => state.cardsList.cards;
 export const selectCurrentCard = (state) => state.cardsList.currentCard;
 export const selectAccountCards = (state) => state.cardsList.byAccountId;

@@ -13,11 +13,11 @@ cardsRouter.get('/', async (req, res, next) => {
     }
 });
 
-cardsRouter.get("/:cardId", async (req, res, next) => {
-    const { cardId } = req.params;
+cardsRouter.get('/current', async (req, res, next) => {
+    console.log(req);
+    const { cardId } = req.body;
   
     try {
-      console.log(req.params, req.body);
       const card = await getCardById(cardId);
   
       res.send({ card });

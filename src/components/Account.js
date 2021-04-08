@@ -9,16 +9,19 @@ import {
 } from '../features/modals/modalsSlice'; 
 import { 
     addCardToAccount,
-    selectCurrentCard
+    selectCurrentCard,
 } from '../features/cards/cardsSlice';
+import {
+    loadAccounts
+} from '../features/accounts/accountSlice';
 
 const Account = ({
     account
 }) => {
+    console.log(account);
     const accountModal = useSelector(accountCardsModalStatus);
     const showModal = useSelector(showModalStatus)
     const currentCard = useSelector(selectCurrentCard);
-    console.log(currentCard, showModal);
     const dispatch = useDispatch();
 
     return <div>
@@ -34,15 +37,15 @@ const Account = ({
         </ul>
         {accountModal ? <Button
             onClick={() => {
-                dispatch(toggleAccountCardsModal());
-                dispatch(toggleShowModal());
-                dispatch(addCardToAccount({
+                const newCard = {
                     cardId: currentCard.id,
                     accountId: account.id,
                     type: currentCard.type,
                     availableCredit: currentCard.availableCredit,
                     active: true
-                }));
+                }
+                dispatch(toggleShowModal());
+                dispatch(addCardToAccount(newCard));
             }}>
             Choose this Account
         </Button> : null }

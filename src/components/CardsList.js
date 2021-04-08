@@ -8,7 +8,7 @@ import {
   toggleShowModal 
 } from '../features/modals/modalsSlice'; 
 import {
-  getCurrentCard
+  setCurrentCard
 } from '../features/cards/cardsSlice'
 import Card from 'react-bootstrap/Card'
 import { CardInfo } from './index';
@@ -34,7 +34,7 @@ const CardsList = ({
                     onClick={() => {
                       dispatch(toggleAccountCardsModal());
                       dispatch(toggleShowModal());
-                      dispatch(getCurrentCard(card.id));
+                      dispatch(setCurrentCard(card));
                     }}
                     variant="primary">
                       Purchase

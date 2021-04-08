@@ -18,9 +18,9 @@ const AccountsContainer = () => {
     const accountCards = useSelector(selectAccountCards);
     console.log(accounts, user);
 
-    // useEffect(() => {
-    //     console.log('added card to account');
-    // }, [accountCards]);
+    useEffect(() => {
+        dispatch(loadAccounts(user.id))
+    }, []);
 
     return <div>
         <UserAccounts 

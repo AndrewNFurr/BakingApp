@@ -17,9 +17,9 @@ accountsRouter.get('/', async (req, res, next) => {
     }
 });
 
-accountsRouter.post("/:accountId/cards", requireUser, async (req, res, next) => {
-    const { accountCard } = req.params;
-    console.log(req.params, req.body)
+accountsRouter.post("/:accountId/cards", async (req, res, next) => {
+    const accountCard  = req.body;
+    //console.log(req.params, req.body)
     try {
       const newCard = await addCardToAccount(accountCard);
       res.send(newCard);

@@ -121,7 +121,7 @@ async function createAccountCard({
     active
 }) {
     try {
-        const { rows: accountCard } = await client.query(`
+        const { rows: [accountCard] } = await client.query(`
             INSERT INTO account_cards("cardId", "accountId", type, "availableCredit", active)
             VALUES($1, $2, $3, $4, $5)
             RETURNING *
@@ -204,7 +204,8 @@ async function getAccountById(id) {
       WHERE id=${id};
     `);
       
-      const accountCards = await getAccountCardById(id);
+    console.log('account gotten', account);
+      const accountCards = await getAccountCardsById(id);
       account.cards = accountCards;
 
       if (!account) {
@@ -228,7 +229,7 @@ async function getAccountsByUserId(userId) {
         `, [userId])
 
         accounts.map(async (account) => {
-            const accountCards = await getAccountCardById(account.id);
+            const accountCards = await getAccountCardsById(account.id);
             account.cards = accountCards;
         })
         
@@ -310,12 +311,10 @@ async function addCardToAccount({cardId, accountId, type, availableCredit, activ
             availableCredit, 
             active
         };
-
         const accountCard = await createAccountCard(newCard);
         const account = await getAccountById(accountId);
-
         const inAccount = account.cards.some((card) => {
-            return card.id === accountCard.cardId;
+            return card.id === 7;
         });
 
         if (!inAccount) {
