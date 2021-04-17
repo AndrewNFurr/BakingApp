@@ -299,6 +299,20 @@ async function getAccountCardsById(id) {
     }
 }
 
+//BILLS
+
+async function getBills() {
+    try {
+        const { rows } = await client.query(`
+            SELECT *
+            FROM bills
+        `);
+
+        return rows;
+    } catch(error) {
+        throw error
+    }
+}
 
 //ADD FUNCTIONS
 
@@ -340,5 +354,6 @@ module.exports = {
     getAccountsByUserId,
     getAccountCards,
     getAccountCardsById,
-    addCardToAccount
+    addCardToAccount,
+    getBills,
 };
