@@ -32,6 +32,7 @@ const Cards = () => {
                 <ul>
                     <li>Credit</li>
                     <li>Debit</li>
+                    <li>Currently Owned</li>
                     <li>Regulations</li>
                     <li>Consultation</li>
                 </ul>
