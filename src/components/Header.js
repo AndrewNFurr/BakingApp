@@ -28,6 +28,12 @@ const Header = () => {
                 { user ? <Nav.Item>
                     <Nav.Link href='/accounts' className='header-link'>Accounts</Nav.Link>
                 </Nav.Item> : null }
+                <Nav.Item>
+                    <Nav.Link href='/purchase' className='header-link'>Make a Purchase</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href='/bills' className='header-link'>Payments</Nav.Link>
+                </Nav.Item>
             </div>
         </Nav>
         <div className='nav-login'>

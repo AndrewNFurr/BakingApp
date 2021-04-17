@@ -38,12 +38,14 @@ apiRouter.use((req, res, next) => {
 
 const usersRouter = require("./users");
 const cardsRouter = require("./cards");
-// const billsRouter = require("./bills");
+const billsRouter = require("./bills");
 const accountsRouter = require("./accounts");
+const account_cardsRouter = require("./account_cards");
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/cards", cardsRouter);
-// apiRouter.use("/bills", billsRouter);
+apiRouter.use("/bills", billsRouter);
 apiRouter.use("/accounts", accountsRouter);
+apiRouter.use("/account_cards", account_cardsRouter);
 
 apiRouter.use((error, req, res, next) => {
   console.error(error);

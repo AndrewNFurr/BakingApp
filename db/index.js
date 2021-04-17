@@ -9,6 +9,7 @@ const client = new Client({
 
 const bcrypt = require("bcrypt");
 const { response, query } = require("express");
+const { identity } = require("lodash");
 
 //METHODS
 
@@ -120,7 +121,7 @@ async function createAccountCard({
     active
 }) {
     try {
-        const { rows: accountCard } = await client.query(`
+        const { rows: [accountCard] } = await client.query(`
             INSERT INTO account_cards("cardId", "accountId", type, "availableCredit", active)
             VALUES($1, $2, $3, $4, $5)
             RETURNING *
@@ -196,15 +197,16 @@ async function getUserByUsername(username) {
 
 async function getAccountById(id) {
     try {
-      const { rows: account } = await client.query(
+      const { rows: [account] } = await client.query(
         `
       SELECT *
       FROM accounts
       WHERE id=${id};
     `);
       
-      const accountCards = await getAccountCardById(id);
+      const accountCards = await getAccountCardsById(id);
       account.cards = accountCards;
+      console.log(account.cards)
 
       if (!account) {
           return null
@@ -226,7 +228,11 @@ async function getAccountsByUserId(userId) {
             WHERE "userId"=$1
         `, [userId])
 
-        return accounts;
+        const accountsWithCards = await Promise.all(
+            accounts.map((account) => getAccountById(account.id))
+          );
+        console.log('other acounts', accountsWithCards)
+        return accountsWithCards;
     } catch(error) {
         throw error;
     }
@@ -249,9 +255,25 @@ async function getAllCards() {
     }
 }
 
+async function getCardById(id) {
+    try {
+        const {
+            rows: [card]
+        } = await client.query(`
+            SELECT *
+            FROM cards
+            WHERE id=${id}
+        `);
+    
+        return card;
+    } catch(error) {
+        throw error;
+    }
+}
+
 async function getAccountCards() {
     try {
-        const { rows: [accountCards] } = await client.query(`
+        const { rows: accountCards } = await client.query(`
             SELECT *
             FROM account_cards;
         `);
@@ -268,7 +290,10 @@ async function getAccountCardsById(id) {
             SELECT *
             FROM account_cards
             WHERE account_cards."accountId"=$1
-        `, [id])
+        `, [id]);
+
+        console.log(accountCards);
+        return accountCards;
     } catch(error) {
         throw error;
     }
@@ -278,6 +303,7 @@ async function getAccountCardsById(id) {
 //ADD FUNCTIONS
 
 async function addCardToAccount({cardId, accountId, type, availableCredit, active}) {
+    console.log('in add');
     try {
         const newCard = {
             cardId, 
@@ -286,11 +312,10 @@ async function addCardToAccount({cardId, accountId, type, availableCredit, activ
             availableCredit, 
             active
         };
-
+        
         const accountCard = await createAccountCard(newCard);
         const account = await getAccountById(accountId);
-        console.log(accountCard);
-
+        console.log(account);
         return account;
     } catch(error) {
         throw error;
@@ -310,6 +335,7 @@ module.exports = {
     getUserById,
     getUserByUsername,
     getAllCards,
+    getCardById,
     getAccountById,
     getAccountsByUserId,
     getAccountCards,

@@ -11,6 +11,19 @@ cardsRouter.get('/', async (req, res, next) => {
     } catch(error) {
         next(error);
     }
-})
+});
+
+cardsRouter.get('/current', async (req, res, next) => {
+    console.log(req);
+    const { cardId } = req.body;
+  
+    try {
+      const card = await getCardById(cardId);
+  
+      res.send({ card });
+    } catch (error) {
+      next(error);
+    }
+  });
 
 module.exports = cardsRouter;

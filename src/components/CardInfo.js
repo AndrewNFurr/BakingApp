@@ -6,7 +6,7 @@ import { accountCardsModalStatus, showModalStatus, toggleAccountCardsModal } fro
 const CardInfo = ({
     card
 }) => {
-    return <div className='card-container'>
+    return <div className='card-visual'>
         <div className='card-header'>
             <p>Furr Banking</p>
             <img src="https://www.logolynx.com/images/logolynx/c4/c4e297cf6b1f22c8df0e7d5ef5bf846e.png"/>
