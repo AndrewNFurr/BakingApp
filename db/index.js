@@ -204,9 +204,9 @@ async function getAccountById(id) {
       WHERE id=${id};
     `);
       
-    console.log('account gotten', account);
       const accountCards = await getAccountCardsById(id);
       account.cards = accountCards;
+      console.log(account.cards)
 
       if (!account) {
           return null
@@ -228,12 +228,11 @@ async function getAccountsByUserId(userId) {
             WHERE "userId"=$1
         `, [userId])
 
-        accounts.map(async (account) => {
-            const accountCards = await getAccountCardsById(account.id);
-            account.cards = accountCards;
-        })
-        
-        return accounts;
+        const accountsWithCards = await Promise.all(
+            accounts.map((account) => getAccountById(account.id))
+          );
+        console.log('other acounts', accountsWithCards)
+        return accountsWithCards;
     } catch(error) {
         throw error;
     }
@@ -274,7 +273,7 @@ async function getCardById(id) {
 
 async function getAccountCards() {
     try {
-        const { rows: [accountCards] } = await client.query(`
+        const { rows: accountCards } = await client.query(`
             SELECT *
             FROM account_cards;
         `);
@@ -293,6 +292,7 @@ async function getAccountCardsById(id) {
             WHERE account_cards."accountId"=$1
         `, [id]);
 
+        console.log(accountCards);
         return accountCards;
     } catch(error) {
         throw error;
@@ -303,6 +303,7 @@ async function getAccountCardsById(id) {
 //ADD FUNCTIONS
 
 async function addCardToAccount({cardId, accountId, type, availableCredit, active}) {
+    console.log('in add');
     try {
         const newCard = {
             cardId, 
@@ -311,20 +312,11 @@ async function addCardToAccount({cardId, accountId, type, availableCredit, activ
             availableCredit, 
             active
         };
+        
         const accountCard = await createAccountCard(newCard);
         const account = await getAccountById(accountId);
-        const inAccount = account.cards.some((card) => {
-            return card.id === 7;
-        });
-
-        if (!inAccount) {
-            console.log(accountCard);
-
-            return account;
-        } else {
-            return null;
-        }
-        
+        console.log(account);
+        return account;
     } catch(error) {
         throw error;
     }

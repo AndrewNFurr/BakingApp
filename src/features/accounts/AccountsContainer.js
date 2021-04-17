@@ -20,7 +20,7 @@ const AccountsContainer = () => {
 
     useEffect(() => {
         dispatch(loadAccounts(user.id))
-    }, []);
+    }, [accountCards]);
 
     return <div>
         <UserAccounts 

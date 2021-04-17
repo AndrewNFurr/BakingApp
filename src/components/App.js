@@ -33,7 +33,6 @@ import {
                     <Users />
                 </Route>
                 <Route exact path='/cards'>
-                    <h1>Cards</h1>
                     <Cards />
                     <Modals />
                 </Route>

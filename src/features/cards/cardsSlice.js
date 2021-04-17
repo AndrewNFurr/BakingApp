@@ -13,7 +13,6 @@ export const loadAccountCards = createAsyncThunk(
     'cardsList/loadAccountCards',
     async () => {
             const { data } = await axios.get('/api/account_cards');
-            console.log(data);
             return data;
     }
 );
@@ -21,12 +20,10 @@ export const loadAccountCards = createAsyncThunk(
 export const getCurrentCard = createAsyncThunk(
     'cardsList/getCurrentCard',
     async ({id}) => {
-        console.log(id)
         const { data } = await axios.get(
             `/api/cards/${card}`,
             { cardId: id }
         );
-        console.log(data);
         return data;
     }
 )
@@ -75,7 +72,7 @@ export const cardsSlice = createSlice({
         },
         setCurrentCard(state, card={}) {
             state.currentCard = card.payload;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -100,7 +97,7 @@ export const cardsSlice = createSlice({
         .addCase(loadAccountCards.fulfilled, (state, action) => {
             state.isLoading = false;
             state.hasError = false;
-            state.byAccountId = action.payload;
+            state.byAccountId[action.payload.accountId] = action.payload;
         })
         .addCase(loadAccountCards.rejected, (state, action) => {
             state.isLoading = false;
@@ -114,7 +111,7 @@ export const cardsSlice = createSlice({
         .addCase(addCardToAccount.fulfilled, (state, action) => {
             state.isLoading = false;
             state.hasError = false;
-            state.byAccountId[action.payload.id].push(action.payload);
+            state.byAccountId[action.payload.accountId].push(action.payload.cards);
         })
         .addCase(addCardToAccount.rejected, (state, action) => {
             state.isLoading = false;
@@ -123,7 +120,7 @@ export const cardsSlice = createSlice({
     }
 });
 
-export const { setCurrentCard } = cardsSlice.actions
+export const { setCurrentCard, setAccountCards } = cardsSlice.actions
 export const selectCards = (state) => state.cardsList.cards;
 export const selectCurrentCard = (state) => state.cardsList.currentCard;
 export const selectAccountCards = (state) => state.cardsList.byAccountId;

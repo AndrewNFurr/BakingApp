@@ -10,9 +10,12 @@ import {
 import { 
     addCardToAccount,
     selectCurrentCard,
+    selectAccountCards
 } from '../features/cards/cardsSlice';
 import {
-    loadAccounts
+    loadAccounts,
+    setAccountCards,
+    setCurrentAccount
 } from '../features/accounts/accountSlice';
 
 const Account = ({
@@ -20,7 +23,7 @@ const Account = ({
 }) => {
     console.log(account);
     const accountModal = useSelector(accountCardsModalStatus);
-    const showModal = useSelector(showModalStatus)
+    const accountCards = useSelector(selectAccountCards);
     const currentCard = useSelector(selectCurrentCard);
     const dispatch = useDispatch();
 
@@ -31,7 +34,7 @@ const Account = ({
         <ul>
             { account.cards ?
                 account.cards.map((card) => {
-                    return <li>{card}</li>
+                    return <li>{card.type}</li>
                 }) : null
             }
         </ul>
