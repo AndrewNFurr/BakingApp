@@ -4,6 +4,9 @@ import {
     loadAccounts,
     selectAccounts
 } from './accountSlice';
+import { 
+    selectAccountCards
+} from '../cards/cardsSlice';
 import { selectCurrentUser } from '../users/usersSlice';
 import { UserAccounts }  from '../../components';
 
@@ -12,7 +15,12 @@ const AccountsContainer = () => {
     
     const { user } = useSelector(selectCurrentUser);
     const accounts = useSelector(selectAccounts);
+    const accountCards = useSelector(selectAccountCards);
     console.log(accounts, user);
+
+    useEffect(() => {
+        dispatch(loadAccounts(user.id))
+    }, [accountCards]);
 
     return <div>
         <UserAccounts 

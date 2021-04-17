@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { useSelector, useDispacth } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { buildHeaders, setToken } from '../../api/index';
+import { selectAccountCards } from '../cards/cardsSlice'
+
 
 export const loadAccounts = createAsyncThunk(
     'accountsList/loadAccounts',
     async (id) => {
-            console.log(id)
             const { data } = await axios.get(
                 '/api/accounts', 
                 { params: { id } }, 
@@ -17,6 +18,7 @@ export const loadAccounts = createAsyncThunk(
     }
 );
 
+
 export const accountsSlice = createSlice({
     name: 'accountsList',
     initialState: {
@@ -25,12 +27,16 @@ export const accountsSlice = createSlice({
         createUserIsPending: false,
         failedToCreateUser: false,
         accounts: [],
+        currentAccount: {}
       },
     reducers: {
         clearAccount(state) {
             console.log(state.accounts)
             state.accounts = [];
-        }
+        },
+        setCurrentAccount(state, account={}) {
+            state.currentAccount = account.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -51,6 +57,7 @@ export const accountsSlice = createSlice({
     }
 });
 
+export const { setAccountCards, setCurrentAccount } = accountsSlice.actions
 export const selectAccounts = (state) => state.accountsList.accounts;
 
 export default accountsSlice.reducer

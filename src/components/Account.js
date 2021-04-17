@@ -7,22 +7,48 @@ import {
   toggleAccountCardsModal,
   toggleShowModal 
 } from '../features/modals/modalsSlice'; 
+import { 
+    addCardToAccount,
+    selectCurrentCard,
+    selectAccountCards
+} from '../features/cards/cardsSlice';
+import {
+    loadAccounts,
+    setAccountCards,
+    setCurrentAccount
+} from '../features/accounts/accountSlice';
 
 const Account = ({
     account
 }) => {
+    console.log(account);
     const accountModal = useSelector(accountCardsModalStatus);
-    const showModal = useSelector(showModalStatus);
+    const accountCards = useSelector(selectAccountCards);
+    const currentCard = useSelector(selectCurrentCard);
     const dispatch = useDispatch();
 
     return <div>
         <h2>{account.name}</h2>
         <p>{account.type}</p>
         <p>{account.balance}</p>
+        <ul>
+            { account.cards ?
+                account.cards.map((card) => {
+                    return <li>{card.type}</li>
+                }) : null
+            }
+        </ul>
         {accountModal ? <Button
             onClick={() => {
-                dispatch(toggleAccountCardsModal());
+                const newCard = {
+                    cardId: currentCard.id,
+                    accountId: account.id,
+                    type: currentCard.type,
+                    availableCredit: currentCard.availableCredit,
+                    active: true
+                }
                 dispatch(toggleShowModal());
+                dispatch(addCardToAccount(newCard));
             }}>
             Choose this Account
         </Button> : null }
