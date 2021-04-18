@@ -4,22 +4,24 @@ import {
     loadBills,
     selectBills
 } from './billsSlice';
+import { Bills } from '../../components'
 
 const Bill = () => {
     const dispatch = useDispatch();
     const bills = useSelector(selectBills);
-
+    
     useEffect(() => {
         const dis = dispatch(loadBills());
-
-    }, [dis, bills]);
+    }, []);
 
     if (!bills) {
         return null;
     }
 
     return <div>
-        Bills
+        <Bills  
+            bills={bills}
+        />
     </div>
 };
 

@@ -11,7 +11,8 @@ import {
       Users,
       HomePageContainer,
       Cards,
-      AccountsContainer
+      AccountsContainer,
+      BillsContainer
     } from '../features/index';
   import {
       Header,
@@ -39,6 +40,9 @@ import {
                 <Route exact path='/accounts'>
                     <h1>Accounts</h1>
                     <AccountsContainer />
+                </Route>
+                <Route exact path='/bills'>
+                    <BillsContainer />
                 </Route>
             </Switch>
         </div>

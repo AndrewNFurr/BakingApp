@@ -5,12 +5,13 @@ export const loadBills = createAsyncThunk(
     'billsList/loadBills',
     async () => {
             const { data } = await axios.get('/api/bills');
+            console.log(data);
             return data;
     }
 );
 
 export const billsSlice = createSlice({
-    name: 'billsSlice',
+    name: 'billsList',
     initialState: {
         bills: [],
         currentBill: {},
@@ -38,3 +39,5 @@ export const billsSlice = createSlice({
 
 export const selectBills = (state) => state.billsList.bills;
 export const selectCurrentBill = (state) => state.billsList.currentBill;
+
+export default billsSlice.reducer;

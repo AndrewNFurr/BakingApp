@@ -4,6 +4,7 @@ import usersReducer from './features/users/usersSlice';
 import cardsReducer from './features/cards/cardsSlice';
 import accountsReducer from './features/accounts/accountSlice';
 import modalsReducer from './features/modals/modalsSlice';
+import billsReducer from './features/bills/billsSlice';
 import {
     persistReducer,
     FLUSH,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
     cardsList: cardsReducer,
     accountsList: accountsReducer,
     modalsList: modalsReducer,
+    billsList: billsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
