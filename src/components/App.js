@@ -16,7 +16,8 @@ import {
     } from '../features/index';
   import {
       Header,
-      Modals
+      Modals,
+      PurchaseForm
   } from './index';
 
 
@@ -43,6 +44,9 @@ import {
                 </Route>
                 <Route exact path='/bills'>
                     <BillsContainer />
+                </Route>
+                <Route exact path='/bills/purchase'>
+                    <PurchaseForm />
                 </Route>
             </Switch>
         </div>

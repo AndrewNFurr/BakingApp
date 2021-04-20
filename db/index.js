@@ -95,7 +95,7 @@ async function createBill({
     title, 
     description, 
     amount, 
-    dueDate, 
+    //dueDate, 
     type
 }) {
     try {
@@ -311,6 +311,24 @@ async function getBills() {
         return rows;
     } catch(error) {
         throw error
+    }
+}
+
+//DELETE FUNCTIONS
+
+//BILLS
+
+async function payBill(id) {
+    try {
+        const { rows: [bill] } = await client.query(`
+            DELETE
+            FROM bills
+            WHERE id=${id}
+        `);
+
+        return bill
+    } catch(error) {
+        throw error;
     }
 }
 

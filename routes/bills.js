@@ -20,7 +20,8 @@ billsRouter.get('/', async(req, res, next) => {
 billsRouter.post('/purchase', async(req, res, next) => {
     console.log(req.body)
     try {
-        const purchase = createBill(req.body);
+        const { newBill } = req.body;
+        const purchase = createBill(newBill);
 
         res.send(purchase);
     } catch(error) {

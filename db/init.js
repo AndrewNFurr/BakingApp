@@ -47,7 +47,7 @@ async function buildTables() {
             DO $$
                 BEGIN
                     IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'bill') THEN
-                    CREATE TYPE bill AS ENUM ('loan', 'credit', 'utility');
+                    CREATE TYPE bill AS ENUM ('loan', 'credit', 'utility', 'restaurant', 'grocery');
                 END IF;
             END
             $$;

@@ -29,7 +29,7 @@ const Header = () => {
                     <Nav.Link href='/accounts' className='header-link'>Accounts</Nav.Link>
                 </Nav.Item> : null }
                 <Nav.Item>
-                    <Nav.Link href='/purchase' className='header-link'>Make a Purchase</Nav.Link>
+                    <Nav.Link href='/bills/purchase' className='header-link'>Make a Purchase</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link href='/bills' className='header-link'>Payments</Nav.Link>

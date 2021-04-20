@@ -10,6 +10,39 @@ export const loadBills = createAsyncThunk(
     }
 );
 
+export const createBill = createAsyncThunk(
+    'billsList/createBill',
+    async (newBill) => {
+        try {
+            console.log(newBill)
+            const { data } = await axios.post(
+                '/api/bills/purchase',
+                { newBill });
+            console.log(data);
+            
+            return data;
+        } catch(error) {
+            throw error;
+        }
+    }
+)
+
+export const payBill = createAsyncThunk(
+    'billsList/payBill',
+    async (id) => {
+        try {
+            const { data } = await axios.delete(
+                `/api/${id}`
+            );
+
+            console.log(data);
+            return data;
+        } catch(error) {
+            console.log(error);
+        }
+    }
+)
+
 export const billsSlice = createSlice({
     name: 'billsList',
     initialState: {
@@ -33,6 +66,19 @@ export const billsSlice = createSlice({
             state.isLoading = false;
             state.hasError = true;
             state.bills = [];
+        })
+        .addCase(createBill.pending, (state) => {
+            state.isLoading = true;
+            state.hasError = false;
+        })
+        .addCase(createBill.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.hasError = false;
+            state.bills.push(action.payload);
+        })
+        .addCase(createBill.rejected, (state, action) => {
+            state.isLoading = false;
+            state.hasError = true;
         })
     }
 });
