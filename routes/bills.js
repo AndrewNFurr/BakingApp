@@ -1,5 +1,9 @@
 const billsRouter = require('express').Router();
 const {
+    payBill
+} = require('../db/index');
+
+const {
     getBills,
     createBill
 } = require('../db/index');
@@ -34,7 +38,13 @@ billsRouter.post('/purchase', async(req, res, next) => {
 
 billsRouter.delete('/:billId', async(req, res, next) => {
     try {
+        const { billId } = req.params;
+        const paid = payBill(billId);
 
+        res.send({
+            paidBill: paid,
+            message: 'Bill was successfully paid! The amount has been deducted from your account balance'
+        })
     } catch(error) {
         next({
             name: 'PayBillError',

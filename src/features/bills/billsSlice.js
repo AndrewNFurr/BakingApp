@@ -32,13 +32,13 @@ export const payBill = createAsyncThunk(
     async (id) => {
         try {
             const { data } = await axios.delete(
-                `/api/${id}`
+                `/api/bills/${id}`
             );
 
             console.log(data);
             return data;
         } catch(error) {
-            console.log(error);
+            throw error;
         }
     }
 )
@@ -77,6 +77,23 @@ export const billsSlice = createSlice({
             state.bills.push(action.payload);
         })
         .addCase(createBill.rejected, (state, action) => {
+            state.isLoading = false;
+            state.hasError = true;
+        })
+        .addCase(payBill.pending, (state) => {
+            state.isLoading = true;
+            state.hasError = false;
+        })
+        .addCase(payBill.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.hasError = false;
+            const paid = state.bills.find((bill) => {
+                bill.id === action.payload;
+            });
+            const idx = state.bills.indexOf(paid);
+            state.bills.splice(idx, 1);
+        })
+        .addCase(payBill.rejected, (state, action) => {
             state.isLoading = false;
             state.hasError = true;
         })
