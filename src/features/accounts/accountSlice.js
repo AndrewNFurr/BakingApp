@@ -18,6 +18,24 @@ export const loadAccounts = createAsyncThunk(
     }
 );
 
+export const chargeAccount = createAsyncThunk(
+    'accountsList/chargeAccount',
+    async ({newBalance, account}) => {
+        try {
+            console.log(newBalance, account);
+            const { data } = await axios.patch(
+                `/api/accounts/${account.id}/bills`,
+                { newBalance },
+            );
+
+            console.log(data);
+            return data;
+        } catch(error) {
+            throw error;
+        }
+    }
+)
+
 
 export const accountsSlice = createSlice({
     name: 'accountsList',
@@ -27,7 +45,8 @@ export const accountsSlice = createSlice({
         createUserIsPending: false,
         failedToCreateUser: false,
         accounts: [],
-        currentAccount: {}
+        currentAccount: {},
+        overDraft: false
       },
     reducers: {
         clearAccount(state) {
@@ -37,6 +56,9 @@ export const accountsSlice = createSlice({
         setCurrentAccount(state, account={}) {
             state.currentAccount = account.payload;
         },
+        setOverDraft(state) {
+            state.overDraft = !state.overDraft;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -53,11 +75,26 @@ export const accountsSlice = createSlice({
             state.isLoading = false;
             state.hasError = true;
             state.accounts = [];
+        })
+        .addCase(chargeAccount.pending, (state) => {
+            state.isLoading = true;
+            state.hasError = false;
+        })
+        .addCase(chargeAccount.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.hasError = false;
+            state.currentAccount.balance = action.payload.balance;
+        })
+        .addCase(chargeAccount.rejected, (state, action) => {
+            state.isLoading = false;
+            state.hasError = true;
         });
     }
 });
 
-export const { setAccountCards, setCurrentAccount } = accountsSlice.actions
+export const { setAccountCards, setCurrentAccount, setOverDraft } = accountsSlice.actions;
 export const selectAccounts = (state) => state.accountsList.accounts;
+export const selectCurrentAccount = (state) => state.accountsList.currentAccount;
+export const isOverDraft = (state) => state.accountsList.overDraft;
 
 export default accountsSlice.reducer

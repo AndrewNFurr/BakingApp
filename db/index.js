@@ -206,7 +206,7 @@ async function getAccountById(id) {
       
       const accountCards = await getAccountCardsById(id);
       account.cards = accountCards;
-      console.log(account.cards)
+      
 
       if (!account) {
           return null
@@ -231,7 +231,7 @@ async function getAccountsByUserId(userId) {
         const accountsWithCards = await Promise.all(
             accounts.map((account) => getAccountById(account.id))
           );
-        console.log('other acounts', accountsWithCards)
+        
         return accountsWithCards;
     } catch(error) {
         throw error;
@@ -292,7 +292,6 @@ async function getAccountCardsById(id) {
             WHERE account_cards."accountId"=$1
         `, [id]);
 
-        console.log(accountCards);
         return accountCards;
     } catch(error) {
         throw error;
@@ -332,10 +331,29 @@ async function payBill(id) {
     }
 }
 
+//UPDATE FUNCTIONS 
+
+//ACCOUNTS
+
+async function deductBillAmount(accountId, newBalance) {
+    try {
+        const { rows: [account] } = await client.query(`
+            UPDATE accounts
+            SET balance=${newBalance}
+            WHERE id=${accountId}
+            RETURNING *
+        `);
+        console.log(account, newBalance, accountId);
+        return account;
+    } catch(error) {
+        throw error;
+    }
+}
+ 
 //ADD FUNCTIONS
 
 async function addCardToAccount({cardId, accountId, type, availableCredit, active}) {
-    console.log('in add');
+    
     try {
         const newCard = {
             cardId, 
@@ -347,7 +365,7 @@ async function addCardToAccount({cardId, accountId, type, availableCredit, activ
         
         const accountCard = await createAccountCard(newCard);
         const account = await getAccountById(accountId);
-        console.log(account);
+       
         return account;
     } catch(error) {
         throw error;
@@ -374,5 +392,6 @@ module.exports = {
     getAccountCardsById,
     addCardToAccount,
     getBills,
-    payBill
+    payBill,
+    deductBillAmount
 };

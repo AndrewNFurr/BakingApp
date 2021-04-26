@@ -15,6 +15,7 @@ import {
 import {
     loadAccounts,
     setAccountCards,
+    selectCurrentAccount,
     setCurrentAccount
 } from '../features/accounts/accountSlice';
 
@@ -24,34 +25,42 @@ const Account = ({
     console.log(account);
     const accountModal = useSelector(accountCardsModalStatus);
     const accountCards = useSelector(selectAccountCards);
+    const currentAccount = useSelector(selectCurrentAccount);
     const currentCard = useSelector(selectCurrentCard);
     const dispatch = useDispatch();
 
-    return <div>
+    return <div className='account-container'
+                onClick={() => {
+                    dispatch(setCurrentAccount(account))
+                }}
+                style={account == currentAccount ? {
+                    border: "2px solid blue"
+                } : null}>
         <h2>{account.name}</h2>
         <p>{account.type}</p>
-        <p>{account.balance}</p>
-        <ul>
+        <p>${account.balance / 100}</p>
+        <ul className='account-card-list'>
             { account.cards ?
                 account.cards.map((card) => {
                     return <li>{card.type}</li>
                 }) : null
             }
         </ul>
-        {accountModal ? <Button
-            onClick={() => {
-                const newCard = {
-                    cardId: currentCard.id,
-                    accountId: account.id,
-                    type: currentCard.type,
-                    availableCredit: currentCard.availableCredit,
-                    active: true
-                }
-                dispatch(toggleShowModal());
-                dispatch(addCardToAccount(newCard));
-            }}>
-            Choose this Account
-        </Button> : null }
+        { accountModal ? 
+            <Button
+                onClick={() => {
+                    const newCard = {
+                        cardId: currentCard.id,
+                        accountId: account.id,
+                        type: currentCard.type,
+                        availableCredit: currentCard.availableCredit,
+                        active: true
+                    }
+                    dispatch(toggleShowModal());
+                    dispatch(addCardToAccount(newCard));
+                }}>
+                Add Card to this Account
+            </Button> : null }
     </div>
 }
 

@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
     loadAccounts,
-    selectAccounts
+    selectAccounts,
+    selectCurrentAccount
 } from './accountSlice';
 import { 
     selectAccountCards
@@ -15,12 +16,12 @@ const AccountsContainer = () => {
     
     const { user } = useSelector(selectCurrentUser);
     const accounts = useSelector(selectAccounts);
+    const current = useSelector(selectCurrentAccount)
     const accountCards = useSelector(selectAccountCards);
-    console.log(accounts, user);
 
     useEffect(() => {
         dispatch(loadAccounts(user.id))
-    }, [accountCards]);
+    }, [accountCards, current.balance]);
 
     return <div>
         <UserAccounts 

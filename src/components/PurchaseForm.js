@@ -58,6 +58,7 @@ const PurchaseForm = () => {
                 type="number"
                 name="amount"
                 id="amount"
+                placeholder="Enter amount in cents"
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
             /><br/>
