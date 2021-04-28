@@ -21,7 +21,7 @@ const Bills = ({
         </div>
         <div className='bills-accounts-list'>
             <h2>Choose an Account</h2>
-            <AccountsContainer />
+            <AccountsContainer onBills={true}/>
         </div>
         <Modal
         show={overDraft}

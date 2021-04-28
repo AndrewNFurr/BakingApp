@@ -21,7 +21,7 @@ export const Modals = () => {
         <Modal.Body>
             {accountModal
                 ? <div className='accountCards-modal'>
-                    <AccountsContainer />
+                    <AccountsContainer onBill={true} />
                 </div>
                 : null}
          </Modal.Body>

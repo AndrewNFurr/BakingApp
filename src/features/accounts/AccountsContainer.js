@@ -11,7 +11,9 @@ import {
 import { selectCurrentUser } from '../users/usersSlice';
 import { UserAccounts }  from '../../components';
 
-const AccountsContainer = () => {
+const AccountsContainer = ({
+    onBills
+}) => {
     const dispatch = useDispatch();
     
     const { user } = useSelector(selectCurrentUser);
@@ -23,8 +25,9 @@ const AccountsContainer = () => {
         dispatch(loadAccounts(user.id))
     }, [accountCards, current.balance]);
 
-    return <div>
+    return <div style={{height:'100%'}}>
         <UserAccounts 
+            onBills={onBills}
             accounts={accounts} />
     </div>
 };

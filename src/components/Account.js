@@ -24,8 +24,10 @@ import {
 } from '../features/accounts/accountSlice';
 
 const Account = ({
-    account
+    account,
+    onBills
 }) => {
+    console.log(onBills);
     const user = useSelector(selectCurrentUser);
     const accountModal = useSelector(accountCardsModalStatus);
     const accountCards = useSelector(selectAccountCards);
@@ -38,7 +40,8 @@ const Account = ({
                     dispatch(setCurrentAccount(account))
                 }}
                 style={account == currentAccount ? {
-                    border: "2px solid blue"
+                    border: "5px solid gold",
+
                 } : null}>
         <h2 syle={{
             color: 'whitesmoke',
@@ -46,8 +49,8 @@ const Account = ({
             padding: '1px',
             margin: '0.5rem'
         }}>{account.name}</h2>
-        <div className='card-details'>
-            <h3>Card Details</h3>
+        <div className='account-details'>
+            <h3>Account Details</h3>
             <hr  style={{
                     color: '#000000',
                     backgroundColor: '#000000',
@@ -63,7 +66,7 @@ const Account = ({
             height: .5,
             borderColor : '#000000'
         }}/>
-        <aside className='account-aside'>
+        { !onBills ? <aside className='account-aside'>
             <h3>Cards Available</h3>
             <div className='account-card-list'>
                 { account.cards ?
@@ -74,7 +77,7 @@ const Account = ({
                     }) : null
                 }
             </div>
-        </aside>
+        </aside> : null }
         { accountModal ? 
             <Button
                 onClick={() => {

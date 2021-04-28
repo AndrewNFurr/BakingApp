@@ -2,13 +2,15 @@ import React from 'react';
 import { Account } from './index';
 
 const UserAccounts = ({
-    accounts
+    accounts,
+    onBills
 }) => {
-    return <div>
+    return <div clasName='accounts-list'>
         {
             accounts.map((account) => {
                 return <div>
-                    <Account account={account}/>
+                    <Account account={account}
+                             onBills={onBills}/>
                 </div>
             })
         }

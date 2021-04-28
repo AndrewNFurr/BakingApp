@@ -58,7 +58,7 @@ export const accountsSlice = createSlice({
         },
         setOverDraft(state) {
             state.overDraft = !state.overDraft;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder

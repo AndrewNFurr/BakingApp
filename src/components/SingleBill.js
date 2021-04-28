@@ -27,19 +27,21 @@ const SingleBill = ({
         <div className='single-bill'>
             <h3 style={{
                 color: 'whitesmoke',
-                backgroundColor: 'darkgreen'
+                backgroundColor: 'darkgreen',
+                padding: '5px',
+                borderRadius: '3px'
             }}>{bill.title} - {bill.type}</h3>
-            <div style={{
-                backgroundColor: 'lightgray'
-            }}>
+            <div>
                 <h4>Contents and Details:</h4>
                 <p>{bill.description}</p>
             </div>
             <p>Amount to be Paid: ${(bill.amount / 100).toFixed(2)}</p>
-        </div>
-        <Button onClick={handlePayment}>
-            Pay Bill
-        </Button>
+                <Button 
+                    onClick={handlePayment}
+                    variant='danger' >
+                Pay Bill
+            </Button>
+        </div> 
     </>
 }
 
