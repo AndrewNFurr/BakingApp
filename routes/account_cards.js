@@ -5,10 +5,8 @@ const {
 } = require('../db/index');
 
 account_cardsRouter.get('/', async (req, res, next) => {
-    console.log('whatido')
     try {
         const accountCards = await getAccountCards();
-        console.log('cards', accountCards)
 
         res.send(accountCards);
     } catch(error) {

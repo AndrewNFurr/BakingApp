@@ -4,11 +4,12 @@ import { accountCardsModalStatus, showModalStatus, toggleAccountCardsModal } fro
 
 
 const CardInfo = ({
-    card
+    card,
+    user
 }) => {
     return <div className='card-visual'>
         <div className='card-header'>
-            <p>Furr Banking</p>
+            <p>Furrency Banking</p>
             <img src="https://www.logolynx.com/images/logolynx/c4/c4e297cf6b1f22c8df0e7d5ef5bf846e.png"/>
         </div>
         <div className='card-contents'>
@@ -18,7 +19,7 @@ const CardInfo = ({
             <p style={{fontSize: '2rem'}}>1234 5678 9123 4567</p>
         </div>
         <div className='card-footer'>
-            <p>Name of Owner</p>
+            <p>{user ? user.name : 'Name of Owner' }</p>
             <p>{card.name}</p>
         </div>
     </div>

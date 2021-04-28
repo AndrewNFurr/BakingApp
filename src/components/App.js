@@ -11,11 +11,13 @@ import {
       Users,
       HomePageContainer,
       Cards,
-      AccountsContainer
+      AccountsContainer,
+      BillsContainer
     } from '../features/index';
   import {
       Header,
-      Modals
+      Modals,
+      PurchaseForm
   } from './index';
 
 
@@ -29,7 +31,7 @@ import {
                     <HomePageContainer />
                 </Route>
                 <Route exact path='/users'>
-                    <h1>Users</h1>
+                    <h1 className='page-header'>Users</h1>
                     <Users />
                 </Route>
                 <Route exact path='/cards'>
@@ -37,8 +39,14 @@ import {
                     <Modals />
                 </Route>
                 <Route exact path='/accounts'>
-                    <h1>Accounts</h1>
+                    <h1 className='page-header'>Accounts</h1>
                     <AccountsContainer />
+                </Route>
+                <Route exact path='/bills'>
+                    <BillsContainer />
+                </Route>
+                <Route exact path='/bills/purchase'>
+                    <PurchaseForm />
                 </Route>
             </Switch>
         </div>

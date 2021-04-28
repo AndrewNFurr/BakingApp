@@ -2,7 +2,8 @@ const accountsRouter = require('express').Router();
 
 const {
     getAccountsByUserId, 
-    addCardToAccount
+    addCardToAccount,
+    deductBillAmount
 } = require('../db/index');
 
 const { requireUser } = require('./utils')
@@ -11,7 +12,7 @@ accountsRouter.get('/', async (req, res, next) => {
     const { id } = req.query;
     try {
         const accounts = await getAccountsByUserId(id);
-        console.log('accountssss', accounts)
+      
         res.send(accounts);
     } catch(error) {
         next(error);
@@ -20,7 +21,6 @@ accountsRouter.get('/', async (req, res, next) => {
 
 accountsRouter.post("/:accountId/cards", async (req, res, next) => {
     const accountCard = req.body;
-    //console.log(req.params, req.body)
     try {
       const newAccount = await addCardToAccount(accountCard);
       res.send(newAccount);
@@ -31,5 +31,17 @@ accountsRouter.post("/:accountId/cards", async (req, res, next) => {
       });
     }
   });
+
+accountsRouter.patch('/:accountId/bills', async (req, res, next) => {
+    const { newBalance } = req.body;
+    const { accountId } = req.params;
+    try {
+        console.log(newBalance, accountId);
+        const accountAfterBill = await deductBillAmount(accountId, newBalance);
+        res.send(accountAfterBill);
+    } catch(error) {
+        next(error)
+    }
+})
 
 module.exports = accountsRouter;
