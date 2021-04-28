@@ -11,15 +11,15 @@ const Bills = ({
 }) => {
     const dispatch = useDispatch();
     const overDraft = useSelector(isOverDraft);
-    return <>
-        <div>
+    return <main className='bills-main'>
+        <div className='bills-container'>
             {
                 bills.map((bill) => {
                     return <SingleBill bill={bill} />
                 })
             }
         </div>
-        <div>
+        <div className='bills-accounts-list'>
             <h2>Choose an Account</h2>
             <AccountsContainer />
         </div>
@@ -28,7 +28,6 @@ const Bills = ({
         animation={true}
         centered={true}
         backdrop={true}
-        // onExit={() => dispatch(toggleAccountCardsModal())}
         keyboard={false}>
         <Modal.Body>
             <p>There is not enough money in the account for this purchase!</p>
@@ -39,7 +38,7 @@ const Bills = ({
          }}>Close Modal</Button>
          </Modal.Footer>
         </Modal>
-    </>
+    </main>
 }
 
 export default Bills;

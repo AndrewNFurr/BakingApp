@@ -38,7 +38,7 @@ const Cards = () => {
                 </ul>
             </aside>
             <main className='cards-container'>
-                <h2>Card Options</h2>
+                <h2 className='page-header'>Card Options</h2>
                 <div>
                     <CardsList 
                         cards={cards}/>

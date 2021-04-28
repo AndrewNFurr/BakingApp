@@ -26,7 +26,7 @@ const PurchaseForm = () => {
             userId: user.id,
             title,
             description,
-            amount,
+            amount: (amount*100),
             type
         };
         const payment = dispatch(createBill(newBill));
@@ -58,7 +58,7 @@ const PurchaseForm = () => {
                 type="number"
                 name="amount"
                 id="amount"
-                placeholder="Enter amount in cents"
+                placeholder="Enter cost of bill"
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
             /><br/>
